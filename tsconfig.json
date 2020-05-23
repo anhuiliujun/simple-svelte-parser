@@ -1,0 +1,19 @@
+{
+	"include": ["src"],
+	"exclude": ["node_modules"],
+
+	"compilerOptions": {
+		"target": "es2017",
+		"module": "es2015",
+		"moduleResolution": "node",
+
+		"declaration": true,
+		"declarationDir": "types",
+		"emitDeclarationOnly": true,
+
+		"strict": true,
+		"diagnostics": true,
+
+		"newLine": "lf"
+	}
+}
