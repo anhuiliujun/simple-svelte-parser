@@ -1,5 +1,5 @@
 import { TemplateNode, Fragment } from './interface'
-import { fragment } from './parser-state/index'
+import { fragment } from './state/index'
 
 type ParserState = (parser: Parser) => ParserState | void;
 
