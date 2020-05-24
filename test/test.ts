@@ -35,7 +35,7 @@ describe('parse', () => {
     });
   });
 
-  it.skip('support attributes', () => {
+  it('support attributes', () => {
     const input = `
     <div class="container">
       <h1>title</h1>
@@ -46,77 +46,107 @@ describe('parse', () => {
     const ast = parse(input);
     const expected = svelteParse4html(input);
    assert.deepEqual(ast, expected)
-    // assert.deepEqual(ast, {
-    //   type: 'Fragment',
-    //   children: [
-    //     {
-    //       type: 'Element',
-    //       name: 'div',
-    //       attributes: [
-    //         {
-    //           type: 'Attribute',
-    //           name: 'class',
-    //           value: [
-    //             {
-    //               type: 'Text',
-    //               data: 'container',
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //       children: [
-    //         {
-    //           type: 'Element',
-    //           name: 'h1',
-    //           attributes: [],
-    //           children: [
-    //             {
-    //               type: 'Text',
-    //               data: 'title',
-    //             },
-    //           ],
-    //         },
-    //         {
-    //           type: 'Element',
-    //           name: 'span',
-    //           attributes: [],
-    //           children: [
-    //             {
-    //               type: 'Text',
-    //               data: 'test nested',
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       type: 'Element',
-    //       name: 'input',
-    //       attributes: [
-    //         {
-    //           type: 'Attribute',
-    //           name: 'type',
-    //           value: [
-    //             {
-    //               type: 'Text',
-    //               data: 'text',
-    //             },
-    //           ],
-    //         },
-    //         {
-    //           type: 'Attribute',
-    //           name: 'name',
-    //           value: [
-    //             {
-    //               type: 'Text',
-    //               data: 'x',
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //       children: [],
-    //     },
-    //   ],
-    // });
+    assert.deepEqual(ast, {
+      type: 'Fragment',
+      children: [
+        {
+          type: 'Text',
+          data: '\n    ',
+          raw: '\n    '
+        },
+        {
+          type: 'Element',
+          name: 'div',
+          attributes: [
+            {
+              type: 'Attribute',
+              name: 'class',
+              value: [
+                {
+                  type: 'Text',
+                  data: 'container',
+                  raw: 'container',
+                },
+              ],
+            },
+          ],
+          children: [
+            {
+              type: 'Text',
+              data: '\n      ',
+              raw: '\n      ',
+            },
+            {
+              type: 'Element',
+              name: 'h1',
+              attributes: [],
+              children: [
+                {
+                  type: 'Text',
+                  data: 'title',
+                  raw: 'title',
+                },
+              ],
+            },
+            {
+              type: 'Text',
+              data: '\n      ',
+              raw: '\n      ',
+            },
+            {
+              type: 'Element',
+              name: 'span',
+              attributes: [],
+              children: [
+                {
+                  type: 'Text',
+                  data: 'test nested',
+                  raw: 'test nested',
+                },
+              ],
+            },
+            {
+              type: 'Text',
+              data: '\n    ',
+              raw: '\n    ',
+            },
+          ],
+        },
+        {
+          type: 'Text',
+          data: '\n    ',
+          raw: '\n    ',
+        },
+        {
+          type: 'Element',
+          name: 'input',
+          attributes: [
+            {
+              type: 'Attribute',
+              name: 'type',
+              value: [
+                {
+                  type: 'Text',
+                  data: 'text',
+                  raw: 'text',
+                },
+              ],
+            },
+            {
+              type: 'Attribute',
+              name: 'name',
+              value: [
+                {
+                  type: 'Text',
+                  data: 'x',
+                  raw: 'x',
+                },
+              ],
+            },
+          ],
+          children: [],
+        },
+      ],
+    });
   });
 });

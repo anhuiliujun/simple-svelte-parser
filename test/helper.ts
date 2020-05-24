@@ -4,9 +4,15 @@ import { parse } from 'svelte/compiler';
 function transform(node) {
   delete node.start;
   delete node.end;
-  if (node.children) {
-    for (const child of node.children) {
-      transform(child);
+  for (const key of Object.keys(node)) {
+    if (typeof node[key] === 'object') {
+      if (Array.isArray(node[key])) {
+        for (const child of node[key]) {
+          transform(child);
+        }
+      } else {
+        transform(node[key]);
+      }
     }
   }
 }
