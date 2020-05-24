@@ -13,6 +13,7 @@ export function text(parser: Parser) {
   const textNode: Text = {
     type: 'Text',
     data,
+    raw: data,
   };
   (parser.current() as Element).children.push(textNode)
 }

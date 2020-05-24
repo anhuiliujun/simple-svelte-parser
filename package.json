@@ -21,9 +21,11 @@
     "rollup": "^0.65.2",
     "rollup-plugin-sucrase": "^2.1.0",
     "sucrase": "^3.9.5",
+    "svelte": "^3.22.3",
     "typescript": "^3.6.2"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "author": "issac.lau3@gmail.com",
   "license": "MIT"
 }

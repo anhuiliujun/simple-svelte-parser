@@ -1,4 +1,4 @@
-import { Parser } from './../index';
+import { Parser } from '../index';
 import { Element, Attribute, Text } from '../interface'
 
 /**
@@ -60,6 +60,7 @@ function readAttributeValue(parser: Parser): Text[] {
   while (parser.index < parser.source.length) {
     // 读到属性结尾处
     if (parser.matchRegex(regex)) {
+      text.raw = text.data;
       chunks.push(text);
       if (quoteMark) {
         parser.index += 1;
