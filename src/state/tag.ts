@@ -1,5 +1,7 @@
 import { Parser } from '../index';
-import { Element, Attribute, Text } from '../interface'
+import { Element, Attribute, Text, MustacheTag, TemplateNode } from '../interface'
+import { Node } from 'estree'
+import {readExpression} from '../read/index';
 
 /**
  * <div> <div style="">
@@ -49,25 +51,50 @@ function readAttribute(parser: Parser, names: Set<string>): Attribute | null {
  * <button style="color: red" class='xx' a=b c=d>a</button>
  * <input a=b/>
  */
-function readAttributeValue(parser: Parser): Text[] {
+function readAttributeValue(parser: Parser): TemplateNode[]  {
+  
   const quoteMark = parser.eat(`'`) ? `'` : parser.eat(`"`) ? `"` : null;
   const regex = quoteMark === `'` ? /'/ : quoteMark === `"` ? /"/ : /[\s/>]/;
-  const text: Text = {
+  let currentChunk: Text = {
     type: 'Text',
     data: '',
   }
   const chunks = [];
+
+  function flush() {
+    if (currentChunk.data.length) {
+      currentChunk.raw = currentChunk.data;
+      chunks.push(currentChunk);
+    }
+  }
+
   while (parser.index < parser.source.length) {
     // 读到属性结尾处
     if (parser.matchRegex(regex)) {
-      text.raw = text.data;
-      chunks.push(text);
+      flush();
       if (quoteMark) {
         parser.index += 1;
       }
       return chunks;
+    } else if (parser.match('{')) {
+      flush();
+      parser.index++;
+      parser.allowWhitespace();
+      const expr: Node = readExpression(parser);
+      parser.allowWhitespace();
+      // 必须有}闭合标签
+      parser.eat('}', true);
+      const node: MustacheTag = {
+        type: 'MustacheTag',
+        expression: expr,
+      };
+      chunks.push(node);
+      currentChunk = {
+        type: 'Text',
+        data: '',
+      }
     } else {
-      text.data += parser.source[parser.index++];
+      currentChunk.data += parser.source[parser.index++];
     }
   }
   throw new Error('Unexpected end of input');

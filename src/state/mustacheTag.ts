@@ -1,13 +1,7 @@
 import { Parser } from '../index';
 import { Element, MustacheTag } from '../interface'
 import { Node } from 'estree'
-import { parseExpressionAt } from '../acorn/index'
-
-function readExpression(parser: Parser): Node {
-  const expr = parseExpressionAt(parser.source, parser.index);
-  parser.index = expr.end;
-  return expr as Node;
-}
+import { readExpression } from '../read/index'
 
 export function mustacheTag(parser: Parser) {
   // 跳过 {

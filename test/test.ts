@@ -216,4 +216,13 @@ describe('parse', () => {
     const actual = parse(input);
     assert.deepEqual(actual, expected);
   });
+
+  it('element attribute support {}', () => {
+    const input = `
+    <h1 class="a {b} {c}">hello {world} {hi}</h1>
+    `;
+    const expected = svelteParse4html(input);
+    const actual = parse(input);
+    assert.deepEqual(actual, expected);
+  });
 });
