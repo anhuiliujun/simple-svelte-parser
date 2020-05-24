@@ -17,7 +17,7 @@ describe('parse', () => {
         {
           data: '\n  ',
           raw: '\n  ',
-          type: 'Text'
+          type: 'Text',
         },
         {
           type: 'Element',
@@ -45,14 +45,14 @@ describe('parse', () => {
     `;
     const ast = parse(input);
     const expected = svelteParse4html(input);
-   assert.deepEqual(ast, expected)
+    assert.deepEqual(ast, expected);
     assert.deepEqual(ast, {
       type: 'Fragment',
       children: [
         {
           type: 'Text',
           data: '\n    ',
-          raw: '\n    '
+          raw: '\n    ',
         },
         {
           type: 'Element',
@@ -145,6 +145,65 @@ describe('parse', () => {
             },
           ],
           children: [],
+        },
+      ],
+    });
+  });
+
+  it('whitespace', () => {
+    const input = `
+    <div
+      class="container"
+      style="color: red;"
+    >
+    </div>
+    
+    `;
+    const expected = svelteParse4html(input);
+    const actual = parse(input);
+    assert.deepEqual(actual, expected);
+    assert.deepEqual(actual, {
+      type: 'Fragment',
+      children: [
+        {
+          type: 'Text',
+          data: '\n    ',
+          raw: '\n    ',
+        },
+        {
+          type: 'Element',
+          name: 'div',
+          attributes: [
+            {
+              type: 'Attribute',
+              name: 'class',
+              value: [
+                {
+                  type: 'Text',
+                  data: 'container',
+                  raw: 'container',
+                },
+              ],
+            },
+            {
+              type: 'Attribute',
+              name: 'style',
+              value: [
+                {
+                  type: 'Text',
+                  data: 'color: red;',
+                  raw: 'color: red;',
+                },
+              ],
+            },
+          ],
+          children: [
+            {
+              type: 'Text',
+              data: '\n    ',
+              raw: '\n    ',
+            },
+          ],
         },
       ],
     });
