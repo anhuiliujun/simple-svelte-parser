@@ -13,10 +13,13 @@
     "build": "tsc && rollup -c",
     "dev": "rollup -cw",
     "test": "mocha --opts mocha.opts",
+    "test:watch": "mocha --require sucrase/register --watch test/test.ts --watch-extensions ts",
     "prepublishOnly": "npm test && npm run build"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",
+    "@types/acorn": "^4.0.5",
+    "@types/estree": "0.0.44",
     "mocha": "^5.2.0",
     "rollup": "^0.65.2",
     "rollup-plugin-sucrase": "^2.1.0",
@@ -25,6 +28,7 @@
     "typescript": "^3.6.2"
   },
   "dependencies": {
+    "acorn": "^7.2.0"
   },
   "author": "issac.lau3@gmail.com",
   "license": "MIT"

@@ -1,6 +1,5 @@
-import { parse } from '../src/index';
 import * as assert from 'assert';
-import { svelteParse4html } from './helper';
+import { svelteParse4html, parse } from './helper';
 
 describe('parse', () => {
   it('simple works', () => {
@@ -207,5 +206,14 @@ describe('parse', () => {
         },
       ],
     });
+  });
+
+  it('support {}', () => {
+    const input = `
+    <h1>hello {world}</h1>
+    `
+    const expected = svelteParse4html(input);
+    const actual = parse(input);
+    assert.deepEqual(actual, expected);
   });
 });

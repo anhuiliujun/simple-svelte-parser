@@ -6,6 +6,7 @@ export function text(parser: Parser) {
   while (
     parser.index < parser.source.length 
     && !parser.match('<') 
+    && !parser.match('{')
   ) {
     data = data + parser.source[parser.index];
     parser.index++;

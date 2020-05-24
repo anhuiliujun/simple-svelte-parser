@@ -1,3 +1,5 @@
+import { Node, Expression } from 'estree'
+
 interface BaseTemplateNode {
   type: string;
   children?: TemplateNode[];
@@ -21,11 +23,16 @@ export interface Element extends BaseTemplateNode {
   children: TemplateNode[];
 }
 
+export interface MustacheTag extends BaseTemplateNode {
+  type: 'MustacheTag',
+  expression: Node,
+}
+
 export interface Attribute {
   name: string;
   type: string;
   value: any;
 }
 
-export type TemplateNode = Element | Fragment | Text | BaseTemplateNode;
+export type TemplateNode = Element | MustacheTag | Fragment | Text | BaseTemplateNode;
 
